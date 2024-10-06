@@ -20,8 +20,10 @@ export default function Home() {
               HealthHeaven
             </h1>
           </div>
+
           <PatientForm />
-          <div className="text-14-regular flex justify-between">
+
+          <div className="text-14-regular flex mt-12 justify-between">
             <p className="justify-items-end text-dark-600 xl:text-green-500">
               © 2024 healthHeaven
             </p>
