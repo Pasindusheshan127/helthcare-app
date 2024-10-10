@@ -19,11 +19,10 @@ import {
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
-import FileUploder from "../FileUploder";
-import { Value } from "@radix-ui/react-select";
 import { registerPatient } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { FileUploder } from "../FileUploder";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter();
@@ -33,14 +32,16 @@ const RegisterForm = ({ user }: { user: User }) => {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      name: "",
-      email: "",
-      phone: "",
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     },
   });
 
-  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
+  const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
+    console.log("Attempting to submit form"); // Add this before setIsLoading
     setIsLoading(true);
+    console.log("Form values:", values); // Existing log
 
     // Store file info in form data as
     let formData;
@@ -58,19 +59,44 @@ const RegisterForm = ({ user }: { user: User }) => {
     }
 
     try {
-      const patientData = {
-        ...values,
+      const patient = {
         userId: user.$id,
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
         birthDate: new Date(values.birthDate),
-        identificationDocument: formData,
+        gender: values.gender,
+        address: values.address,
+        occupation: values.occupation,
+        emergencyContactName: values.emergencyContactName,
+        emergencyContactNumber: values.emergencyContactNumber,
+        primaryPhysician: values.primaryPhysician,
+        insuranceProvider: values.insuranceProvider,
+        insurancePolicyNumber: values.insurancePolicyNumber,
+        allergies: values.allergies,
+        currentMedication: values.currentMedication,
+        familyMedicalHistory: values.familyMedicalHistory,
+        pastMedicalHistory: values.pastMedicalHistory,
+        identificationType: values.identificationType,
+        identificationNumber: values.identificationNumber,
+        identificationDocument: values.identificationDocument
+          ? formData
+          : undefined,
+        privacyConsent: values.privacyConsent,
       };
-      //@ts-ignore
-      const newPatient = await registerPatient(patientData);
-    } catch (err) {
-      console.error("Error creating user:", err);
+
+      const newPatient = await registerPatient(patient);
+
+      console.log("Submitting Patient Data:", patient);
+      if (newPatient) {
+        router.push(`/patients/${user.$id}/new-appointment`);
+      }
+    } catch (error) {
+      console.log(error);
     }
+
     setIsLoading(false);
-  }
+  };
 
   return (
     <Form {...form}>

@@ -6,6 +6,7 @@ import {
   databases,
   ENDPOINT,
   PATIENT_COLLECTION_ID,
+  PROJECT_ID,
   storage,
   users,
 } from "../appwrite.config";
@@ -73,5 +74,18 @@ export const registerPatient = async ({
     return parseStringify(newPatient);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getPatient = async (userId: string) => {
+  try {
+    const patients = await databases.listDocuments(
+      DATABASE_ID!,
+      PATIENT_COLLECTION_ID!,
+      [Query.equal("userId", userId)]
+    );
+    return parseStringify(patients.documents[0]);
+  } catch (error) {
+    console.error("Error getting user:", error);
   }
 };

@@ -1,4 +1,4 @@
-export const GenderOptions = ["male", "female", "other"];
+export const GenderOptions = ["Male", "Female", "Other"];
 
 export const PatientFormDefaultValues = {
   firstName: "",
@@ -6,7 +6,7 @@ export const PatientFormDefaultValues = {
   email: "",
   phone: "",
   birthDate: new Date(Date.now()),
-  gender: "male" as Gender,
+  gender: "Male" as Gender,
   address: "",
   occupation: "",
   emergencyContactName: "",
@@ -43,39 +43,39 @@ export const IdentificationTypes = [
 export const Doctors = [
   {
     image: "/assets/images/dr-green.png",
-    name: "Nuwan Perera",
+    name: "John Green",
   },
   {
     image: "/assets/images/dr-cameron.png",
-    name: "Shanika Fernando",
+    name: "Leila Cameron",
   },
   {
     image: "/assets/images/dr-livingston.png",
-    name: "Kumara Jayasinghe",
+    name: "David Livingston",
   },
   {
     image: "/assets/images/dr-peter.png",
-    name: "Amila Silva",
+    name: "Evan Peter",
   },
   {
     image: "/assets/images/dr-powell.png",
-    name: "Ruwanthi Karunaratne",
+    name: "Jane Powell",
   },
   {
     image: "/assets/images/dr-remirez.png",
-    name: "Dilan Senanayake",
+    name: "Alex Ramirez",
   },
   {
     image: "/assets/images/dr-lee.png",
-    name: "Sajith Weerasinghe",
+    name: "Jasmine Lee",
   },
   {
     image: "/assets/images/dr-cruz.png",
-    name: "Kavindi Wickramasinghe",
+    name: "Alyana Cruz",
   },
   {
     image: "/assets/images/dr-sharma.png",
-    name: "Ashan Fonseka",
+    name: "Hardik Sharma",
   },
 ];
 
