@@ -39,6 +39,7 @@ const RegisterForm = ({ user }: { user: User }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
+    console.log("Submit button clicked");
     console.log("Attempting to submit form"); // Add this before setIsLoading
     setIsLoading(true);
     console.log("Form values:", values); // Existing log
@@ -250,7 +251,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         <CustomFormField
           fieldType={FormFieldType.SELECT}
           control={form.control}
-          name="primartPhysician"
+          name="primaryPhysician"
           label="Primary Physician"
           placeholder="select a physician"
         >
