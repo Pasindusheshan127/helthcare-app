@@ -3,10 +3,60 @@ import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { columns, Payment } from "@/components/table/columns";
+import { DataTable } from "@/components/table/DataTable";
 
 const Admin = async () => {
   const appointments = await getRecentAppointmentList();
+  // interface Patient {
+  //   name: string;
+  //   age: number;
+  //   id: string;
+  // }
 
+  interface Appointment {
+    id: string;
+    amount: number;
+    status: "pending" | "processing" | "success" | "scheduled";
+    email: string;
+    schedule: string;
+    primaryPhysician: string;
+    userId: string;
+    Patient: { name: string; age: number; id: string };
+  }
+
+  const data: Appointment[] = [
+    {
+      id: "728ed52f",
+      Patient: {
+        name: "john",
+        id: "728ed52f",
+        age: 10,
+      },
+      status: "pending",
+      email: "m@example.com",
+      amount: 100,
+      schedule: "01/27/2024",
+      primaryPhysician: "John Green",
+      userId: "728ed52f",
+    },
+    {
+      id: "728ed2f",
+      Patient: {
+        name: "john",
+        id: "728ed2f",
+        age: 10,
+      },
+      status: "scheduled",
+      email: "m@example.com",
+      amount: 100,
+      schedule: "02/27/2024",
+      primaryPhysician: "Leila Cameron",
+      userId: "728ed2f",
+    },
+  ];
+
+  console.log("doc:", appointments.documents);
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-4">
       <header className="admin-header">
@@ -51,6 +101,8 @@ const Admin = async () => {
             icon="/assets/icons/cancelled.svg"
           />
         </section>
+        <DataTable columns={columns} data={appointments.documents} />
+        <DataTable columns={columns} data={data} />
       </main>
     </div>
   );

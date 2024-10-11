@@ -63,7 +63,7 @@ export const getRecentAppointmentList = async () => {
 
     const initialCounts = {
       scheduledCount: 0,
-      pendingCount: 0,
+      pendingCount: 2,
       cancelledCount: 0,
     };
 
@@ -80,6 +80,7 @@ export const getRecentAppointmentList = async () => {
             acc.cancelledCount++;
             break;
         }
+
         return acc;
       },
       initialCounts
