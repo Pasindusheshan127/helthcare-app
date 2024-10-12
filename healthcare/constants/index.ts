@@ -26,6 +26,30 @@ export const PatientFormDefaultValues = {
   privacyConsent: false,
 };
 
+export const PatientFormDefaultValuesTest = {
+  name: "",
+  email: "",
+  phone: "",
+  birthDate: new Date(Date.now()),
+  gender: "Male" as Gender,
+  address: "",
+  occupation: "",
+  emergencyContactName: "",
+  emergencyContactNumber: "",
+  primaryPhysician: "",
+  insuranceProvider: "",
+  insurancePolicyNumber: "",
+  allergies: "",
+  currentMedication: "",
+  familyMedicalHistory: "",
+  pastMedicalHistory: "",
+  identificationType: "Birth Certificate",
+  identificationNumber: "",
+  treatmentConsent: false,
+  disclosureConsent: false,
+  privacyConsent: false,
+};
+
 export const IdentificationTypes = [
   "Birth Certificate",
   "Driver's License",
