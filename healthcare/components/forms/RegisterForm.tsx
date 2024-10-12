@@ -22,6 +22,7 @@ import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import { FileUploader } from "../FileUploader";
+import { registerPatient } from "@/lib/actions/patient.actions";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter();
@@ -87,13 +88,12 @@ const RegisterForm = ({ user }: { user: User }) => {
         privacyConsent: values.privacyConsent,
       };
 
-      // const newPatient = await registerPatient(patient);
       console.log("newPatient :", patient);
+      const newPatient = await registerPatient(patient);
 
-      //   if (newPatient) {
-      //     router.push(`/patients/${user.$id}/new-appointment`);
-      //     console.log("new user :", newPatient);
-      //   }
+      if (newPatient) {
+        router.push(`/patients/${user.$id}/new-appointment`);
+      }
     } catch (error) {
       console.log(error);
     }
