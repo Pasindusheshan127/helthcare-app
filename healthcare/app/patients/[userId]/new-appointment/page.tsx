@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import AppointmentForm from "@/components/forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
+import Link from "next/link";
 
 const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
   const patient = await getPatient(userId);
@@ -13,18 +14,20 @@ const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
       {/* TODO: Verification | */}
       <section className="remove-scrolbar container my-auto">
         <div className="sub-container max-w-[860px flex-1 justify-between]">
-          <div className="flex gap-2 cursor-pointer">
-            <Image
-              src="/assets/icons/HealthHeaven.png"
-              height={1000}
-              width={1000}
-              alt="patient"
-              className="mb-12 h-10 w-fit rounded-full "
-            />
-            <h1 className="text-5xl-bold text-center font-semibold mt-2">
-              HealthHeaven
-            </h1>
-          </div>
+          <Link href="/">
+            <div className="flex gap-2 cursor-pointer w-1/2">
+              <Image
+                src="/assets/icons/HealthHeaven.png"
+                height={1000}
+                width={1000}
+                alt="patient"
+                className="mb-12 h-10 w-fit rounded-full "
+              />
+              <h1 className="text-5xl-bold text-center font-semibold mt-2">
+                HealthHeaven
+              </h1>
+            </div>
+          </Link>
 
           <AppointmentForm
             type="create"
@@ -36,11 +39,11 @@ const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
         </div>
       </section>
       <Image
-        src="/assets/images/appointment-img.png"
+        src="/assets/images/appointmentImg.jpg"
         height={1000}
         width={1000}
         alt="appointment"
-        className="side-img max-w-[390px] bg-bottom"
+        className="side-img max-w-[450px] bg-bottom"
       />
     </div>
   );

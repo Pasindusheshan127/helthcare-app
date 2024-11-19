@@ -37,11 +37,11 @@ export default function Home({ searchParams }: SearchParamProps) {
         </div>
       </section>
       <Image
-        src="/assets/images/onboardingImg.jpg"
+        src="/assets/images/home.jpg"
         height={1000}
         width={1000}
         alt="patient"
-        className="side-img max-w-[50%]"
+        className="side-img max-w-[40%]"
       />
     </div>
   );

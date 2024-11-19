@@ -4,12 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
-import CustomFormField from "../CustomFormField";
+import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAppointmentSchema } from "@/lib/validation";
 import { useRouter } from "next/navigation";
-import { FormFieldType } from "./PatientForm";
 import { Doctors } from "@/constants";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
@@ -38,6 +37,11 @@ const AppointmentForm = ({
 
   const AppointmentFormValidation = getAppointmentSchema(type);
 
+  useEffect(() => {
+    console.log("Appointment page is rendering");
+    console.log("getting appointment:", appointment);
+  }, []);
+
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
@@ -57,37 +61,35 @@ const AppointmentForm = ({
     let status;
     switch (type) {
       case "schedule":
-        status = "schedule";
+        status = "scheduled";
         break;
       case "cancel":
-        status = "cancel";
-        break;
-      case "create":
-        status = "create";
+        status = "cancelled";
         break;
       default:
-        break;
+        status = "pending";
     }
 
     try {
       if (type === "create" && patientId) {
-        const appointmentData = {
+        const appointment = {
           userId,
           patient: patientId,
           primaryPhysician: values.primaryPhysician,
           schedule: new Date(values.schedule),
-          reason: values.reason,
-          note: values.note,
+          reason: values.reason!,
           status: status as Status,
+          note: values.note,
         };
 
-        //@ts-ignore
-        const appointment = await createAppointment(appointmentData);
+        // @ts-ignore
+        const newAppointment = await createAppointment(appointment);
+        console.log(newAppointment);
 
-        if (appointment) {
+        if (newAppointment) {
           form.reset();
           router.push(
-            `/patient/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
+            `/patients/${userId}/new-appointment/success?appointmentId=${newAppointment.$id}`
           );
         }
       } else {
@@ -95,22 +97,24 @@ const AppointmentForm = ({
           userId,
           appointmentId: appointment?.$id!,
           appointment: {
-            primaryPhysician: values?.primaryPhysician,
-            schedule: new Date(values?.schedule),
+            primaryPhysician: values.primaryPhysician,
+            schedule: new Date(values.schedule),
             status: status as Status,
-            cancellationReason: values?.cancellationReason,
+            cancellationReason: values.cancellationReason,
           },
           type,
         };
-        //@ts-ignore
+
+        // @ts-ignore
         const updatedAppointment = await updateAppointment(appointmentToUpdate);
+
         if (updatedAppointment) {
           setOpen && setOpen(false);
           form.reset();
         }
       }
-    } catch (err) {
-      console.error("Error creating user:", err);
+    } catch (error) {
+      console.log(error);
     }
     setIsLoading(false);
   };

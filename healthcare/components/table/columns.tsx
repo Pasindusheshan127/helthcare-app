@@ -19,19 +19,6 @@ import Image from "next/image";
 import AppointmentModal from "../AppointmentModal";
 import { Appointment } from "@/types/appwrite.types";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "scheduled";
-  email: string;
-  schedule: string;
-  primaryPhysician: string;
-  userId: string;
-  Patient: { name: string; age: number; id: string };
-};
-
 export const columns: ColumnDef<Appointment>[] = [
   {
     header: "ID",
@@ -41,7 +28,7 @@ export const columns: ColumnDef<Appointment>[] = [
     accessorKey: "patient",
     header: "Patient",
     cell: ({ row }) => (
-      <p className="text-14-medium">{row.original.Patient.name}</p>
+      <p className="text-14-medium">{row.original.patient.name}</p>
     ),
   },
   {
@@ -95,13 +82,13 @@ export const columns: ColumnDef<Appointment>[] = [
         <div className="flex gap-1">
           <AppointmentModal
             type="schedule"
-            patientTd={data.Patient.$id}
+            patientTd={data.patient.$id}
             userId={data.userId}
             appointment={data}
           />
           <AppointmentModal
             type="cancel"
-            patientTd={data.Patient.$id}
+            patientTd={data.patient.$id}
             userId={data.userId}
             appointment={data}
           />
